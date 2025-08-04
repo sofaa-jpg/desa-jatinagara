@@ -44,13 +44,13 @@
                     <div x-show="dropdownOpen" x-transition
                         class="absolute top-10 left-0 mt-2 w-max bg-white shadow-lg rounded-md py-4 z-50">
                         <a href="{{ route('profil.info') }}"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ request()->routeIs('profil.info') ? 'bg-gray-100 font-semibold' : '' }}">📊 Informasi Desa</a>
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ request()->routeIs('profil.info') ? 'bg-gray-100 font-semibold' : '' }}">Informasi Desa</a>
                         <a href="{{ route('profil.visi') }}"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ request()->routeIs('profil.visi') ? 'bg-gray-100 font-semibold' : '' }}">🎯 Visi & Misi</a>
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ request()->routeIs('profil.visi') ? 'bg-gray-100 font-semibold' : '' }}">Visi & Misi</a>
                         <a href="{{ route('profil.sejarah') }}"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ request()->routeIs('profil.sejarah') ? 'bg-gray-100 font-semibold' : '' }}">📚 Sejarah Desa</a>
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ request()->routeIs('profil.sejarah') ? 'bg-gray-100 font-semibold' : '' }}">Sejarah Desa</a>
                         <a href="{{ route('profil.struktur') }}"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ request()->routeIs('profil.struktur') ? 'bg-gray-100 font-semibold' : '' }}">🏛️ Struktur Pemerintahan</a>
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ request()->routeIs('profil.struktur') ? 'bg-gray-100 font-semibold' : '' }}">Struktur Pemerintahan</a>
                     </div>
                 </div>
                 <div class="relative" x-data="{ dropdownOpenLayanan: false }" @mouseenter="dropdownOpenLayanan = true"
@@ -68,6 +68,8 @@
                     </button>
                     <div x-show="dropdownOpenLayanan" x-transition
                         class="absolute top-10 right-0 mt-2 w-max bg-white shadow-lg rounded-md py-4 z-50">
+                        <a href="{{ route('online-services') }}"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Ajukan Surat Online</a>
                         <a href="{{ route('service-procedures') }}"
                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Prosedur Layanan</a>
                         <a href="{{ route('documents') }}"
