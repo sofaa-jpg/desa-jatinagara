@@ -36,7 +36,7 @@ class NewsController extends Controller
         $request->validate([
             'title' => 'required|string|max:255|unique:news,title',
             'content' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Batas 2MB
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240', // Batas 10MB
             'author' => 'nullable|string|max:255',
             'published_at' => 'nullable|date',
             'is_published' => 'nullable|boolean', // Di Blade akan pakai input hidden & checkbox
@@ -76,7 +76,7 @@ class NewsController extends Controller
         $request->validate([
             'title' => 'required|string|max:255|unique:news,title,' . $news->id, // Unique kecuali ID sendiri
             'content' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
             'author' => 'nullable|string|max:255',
             'published_at' => 'nullable|date',
             'is_published' => 'nullable|boolean',

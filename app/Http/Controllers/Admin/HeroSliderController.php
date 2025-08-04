@@ -41,7 +41,7 @@ class HeroSliderController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10000', // Validasi gambar
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240', // Validasi gambar, maks 10MB
             'is_active' => 'nullable|boolean', // Nullable karena checkbox tidak akan ada di request jika tidak dicentang
             'order' => 'nullable|integer',
         ]);
@@ -98,7 +98,7 @@ class HeroSliderController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10048', // Gambar opsional saat update
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240', // Gambar opsional saat update, maks 10MB
             'is_active' => 'nullable|boolean',
             'order' => 'nullable|integer',
         ]);

@@ -35,7 +35,7 @@ class PotentialController extends Controller
         $request->validate([
             'title' => 'required|string|max:255|unique:potentials,title',
             'description' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Batas 2MB
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240', // Maks 10MB
             'is_published' => 'nullable|boolean',
             'order' => 'nullable|integer',
         ]);
@@ -73,7 +73,7 @@ class PotentialController extends Controller
         $request->validate([
             'title' => 'required|string|max:255|unique:potentials,title,' . $potential->id, // Unique kecuali ID sendiri
             'description' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
             'is_published' => 'nullable|boolean',
             'order' => 'nullable|integer',
         ]);

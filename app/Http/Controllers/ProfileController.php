@@ -32,7 +32,7 @@ class ProfileController extends Controller
         if ($request->hasFile('avatar')) {
             // Hapus avatar lama jika ada
             $request->validate([
-                'avatar' => ['image', 'mimes:jpg,jpeg,png', 'max:2048'],
+                'avatar' => ['image', 'mimes:jpg,jpeg,png', 'max:10240'],
             ]);
             if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
                 Storage::disk('public')->delete($user->avatar);

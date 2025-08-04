@@ -46,7 +46,7 @@ class InstitutionController extends Controller
             'leader_name' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'category' => 'nullable|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Max 2MB
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240', // Maks 10MB
             'contact_phone' => 'nullable|string|max:20',
             'contact_email' => 'nullable|email|max:255',
             'is_published' => 'nullable|boolean',
@@ -101,7 +101,7 @@ class InstitutionController extends Controller
             'leader_name' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'category' => 'nullable|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
             'contact_phone' => 'nullable|string|max:20',
             'contact_email' => 'nullable|email|max:255',
             'is_published' => 'nullable|boolean',

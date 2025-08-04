@@ -37,9 +37,9 @@ class GalleryController extends Controller
         $request->validate([
             'name' => 'required|string|max:255|unique:galleries,name',
             'description' => 'nullable|string',
-            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Gambar sampul
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240', // Gambar sampul, maks 10MB
             'is_published' => 'nullable|boolean',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Untuk multiple image upload
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240', // Untuk multiple image upload, maks 10MB
             'captions.*' => 'nullable|string|max:255', // Keterangan untuk gambar baru
         ]);
 
@@ -102,9 +102,9 @@ class GalleryController extends Controller
         $request->validate([
             'name' => 'required|string|max:255|unique:galleries,name,' . $gallery->id,
             'description' => 'nullable|string',
-            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240', // Maks 10MB
             'is_published' => 'nullable|boolean',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Gambar baru
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240', // Gambar baru, maks 10MB
             'captions.*' => 'nullable|string|max:255', // Keterangan untuk gambar baru
 
             // Validasi untuk gambar yang sudah ada (dikirim dari JS)

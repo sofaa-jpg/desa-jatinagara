@@ -153,7 +153,7 @@ class SettingController extends Controller
             'footer_about_title' => 'nullable|string',
             'site_meta_description_content' => 'nullable|string|max:255',
             'site_meta_description_title' => 'nullable|string',
-            'site_logo_content' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'site_logo_content' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
             'site_logo_title' => 'nullable|string',
             'site_logo_type' => ['required', Rule::in(['text', 'richtext', 'url', 'image', 'color'])],
             'remove_site_logo_content' => 'nullable|boolean',
