@@ -32,8 +32,8 @@
         function initializeTinyMCE(selector) {
             tinymce.init({
                 selector: selector,
-                plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount nonbreaking hr pagebreak emoticons template codesample directionality print autoresize',
-                toolbar: 'undo redo | formatselect | bold italic underline strikethrough | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media table | hr removeformat | preview fullscreen code | help',
+                plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table help wordcount nonbreaking pagebreak emoticons codesample directionality autoresize',
+                toolbar: 'undo redo | formatselect | bold italic underline strikethrough | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media table | removeformat | preview fullscreen code | help',
                 height: 500,
                 menubar: 'file edit view insert format tools table help',
                 statusbar: true,
@@ -452,6 +452,16 @@
                                       hover:bg-gray-200 dark:hover:bg-gray-600
                                       transition-colors duration-150 ease-in-out
                                       {{ request()->routeIs('admin.service-procedures.*') ? 'bg-gray-200 dark:bg-gray-600 font-semibold' : '' }}">
+                                Beranda
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.service-procedures.index') }}"
+                                class="block w-full p-2 rounded-md text-sm
+                                      text-gray-700 dark:text-gray-200
+                                      hover:bg-gray-200 dark:hover:bg-gray-600
+                                      transition-colors duration-150 ease-in-out
+                                      {{ request()->routeIs('admin.service-procedures.*') ? 'bg-gray-200 dark:bg-gray-600 font-semibold' : '' }}">
                                 Surat Masuk
                             </a>
                         </li>
@@ -472,7 +482,17 @@
                                       hover:bg-gray-200 dark:hover:bg-gray-600
                                       transition-colors duration-150 ease-in-out
                                       {{ request()->routeIs('admin.pengajuan-surat.*') ? 'bg-gray-200 dark:bg-gray-600 font-semibold' : '' }}">
-                                Pengajuan Surat Online
+                                Grafik Statistik
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.service-procedures.index') }}"
+                                class="block w-full p-2 rounded-md text-sm
+                                      text-gray-700 dark:text-gray-200
+                                      hover:bg-gray-200 dark:hover:bg-gray-600
+                                      transition-colors duration-150 ease-in-out
+                                      {{ request()->routeIs('admin.service-procedures.*') ? 'bg-gray-200 dark:bg-gray-600 font-semibold' : '' }}">
+                                Laporan
                             </a>
                         </li>
                     </ul>
@@ -520,7 +540,7 @@
                                       hover:bg-gray-200 dark:hover:bg-gray-600
                                       transition-colors duration-150 ease-in-out
                                       {{ request()->routeIs('admin.settings.edit-general-info') ? 'bg-gray-200 dark:bg-gray-600 font-semibold' : '' }}">
-                                ℹ️ Info Umum Desa
+                                Info Umum Desa
                             </a>
                         </li>
                         <li>
@@ -530,7 +550,7 @@
                                       hover:bg-gray-200 dark:hover:bg-gray-600
                                       transition-colors duration-150 ease-in-out
                                       {{ request()->routeIs('admin.settings.edit-village-profile') ? 'bg-gray-200 dark:bg-gray-600 font-semibold' : '' }}">
-                                🏛️ Profil & Statistik Desa
+                                Profil & Statistik Desa
                             </a>
                         </li>
                         <li>
