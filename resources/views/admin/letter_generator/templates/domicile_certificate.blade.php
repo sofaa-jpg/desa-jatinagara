@@ -145,13 +145,13 @@
             <tr>
                 <td class="logo">
                     {{-- Logo Desa --}}
-                    <img src="{{ asset('images/logo-desa-orakeri.png') }}" alt="Logo Desa"> {{-- Sesuaikan path logo --}}
+                    <img src="{{ asset('images/logo.png') }}" alt="Logo Desa"> {{-- Sesuaikan path logo --}}
                 </td>
                 <td class="text">
-                    <h2>PEMERINTAH KABUPATEN [NAMA KABUPATEN]</h2>
-                    <h3>KECAMATAN [NAMA KECAMATAN]</h3>
-                    <h2>DESA ORAKERI</h2>
-                    <p>Jl. Raya Orakeri No. 123, Kode Pos: XXXX</p>
+                    <h2>PEMERINTAH KABUPATEN Jatinagara</h2>
+                    <h3>KECAMATAN Jatinagara</h3>
+                    <h2>DESA Jatinagara</h2>
+                    <p>Jl. Raya Jatinagara No. 123, Kode Pos: XXXX</p>
                 </td>
             </tr>
             <tr>
@@ -167,7 +167,7 @@
         </div>
 
         <div class="content">
-            <p class="indent">Yang bertanda tangan di bawah ini Kepala Desa Orakeri, menerangkan bahwa:</p>
+            <p class="indent">Yang bertanda tangan di bawah ini Kepala Desa Jatinagara, menerangkan bahwa:</p>
             <table class="details-table">
                 <tr>
                     <td>Nama</td>
@@ -205,7 +205,7 @@
                 </tr>
             </table>
 
-            <p class="indent">Yang bersangkutan benar-benar penduduk Desa Orakeri dan bermaksud untuk
+            <p class="indent">Yang bersangkutan benar-benar penduduk Desa Jatinagara dan bermaksud untuk
                 {{ $keperluan_domisili }}.</p>
 
             <p class="indent">Demikian surat keterangan ini dibuat dengan sebenarnya untuk dapat dipergunakan
@@ -214,7 +214,7 @@
 
         <div class="signature">
             <div>
-                Orakeri, {{ $tanggal_surat }}<br>
+                Jatinagara, {{ $tanggal_surat }}<br>
                 {{ $jabatan_kepala_desa }}<br>
                 <br><br><br><br>
                 <div class="name">{{ $kepala_desa }}</div>

@@ -15,7 +15,7 @@
                                 clip-rule="evenodd" />
                         </svg>
                     </a>
-                    <span class="ml-2 text-xl font-bold text-gray-800">Desa Orakeri</span>
+                    <span class="ml-2 text-xl font-bold text-gray-800">Desa Jatinagara</span>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">

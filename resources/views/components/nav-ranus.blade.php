@@ -9,7 +9,7 @@
                             d="M11.47 2.47a.75.75 0 0 1 1.06 0l7.5 7.5a.75.75 0 1 1-1.06 1.06L12 4.06 5.03 11.03a.75.75 0 0 1-1.06-1.06l7.5-7.5Z"
                             clip-rule="evenodd" />
                     </svg>
-                    <span>Desa Orakeri</span>
+                    <span>Desa Jatinagara</span>
                 </a>
             </div>
 

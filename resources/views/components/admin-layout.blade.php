@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <meta name="description" content="{{ config('app.description', 'Dasbor Admin Desa Orakeri') }}">
-    <title>{{ config('app.name', 'Dasbor Admin Desa Orakeri') }}</title>
+    <meta name="description" content="{{ config('app.description', 'Dasbor Admin Desa Jatinagara') }}">
+    <title>{{ config('app.name', 'Dasbor Admin Desa Jatinagara') }}</title>
 
     {{-- Script untuk mencegah FOUC / FOLT (Tempatkan di SINI) --}}
     <script>

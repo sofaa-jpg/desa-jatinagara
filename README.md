@@ -1,6 +1,6 @@
-# 🏡 Aplikasi Website Resmi Desa Orakeri
+# 🏡 Aplikasi Website Resmi Desa Jatinagara
 
-Sistem informasi dan promosi desa modern yang dibangun dengan **Laravel 12** sebagai backend dan **Tailwind CSS** sebagai framework CSS. Aplikasi ini bertujuan untuk menyediakan platform digital bagi Pemerintah Desa Orakeri dalam menyampaikan informasi, mempromosikan potensi dan produk desa, serta memfasilitasi layanan kepada masyarakat secara online.
+Sistem informasi dan promosi desa modern yang dibangun dengan **Laravel 12** sebagai backend dan **Tailwind CSS** sebagai framework CSS. Aplikasi ini bertujuan untuk menyediakan platform digital bagi Pemerintah Desa Jatinagara dalam menyampaikan informasi, mempromosikan potensi dan produk desa, serta memfasilitasi layanan kepada masyarakat secara online.
 
 ## ✨ Fitur Utama:
 

@@ -65,8 +65,8 @@ class LetterGeneratorController extends Controller
                 'jumlah_hewan' => $request->jumlah_hewan,
                 'ciri_hewan' => $request->ciri_hewan,
                 'catatan_tambahan' => $request->catatan_tambahan,
-                'kepala_desa' => 'Radianus', // Ambil dari ProfileContent jika ada
-                'jabatan_kepala_desa' => 'Kepala Desa Orakeri', // Ambil dari ProfileContent
+                'kepala_desa' => 'Jaja Sutarja S.IP', // Ambil dari ProfileContent jika ada
+                'jabatan_kepala_desa' => 'Kepala Desa Jatinagara', // Ambil dari ProfileContent
             ];
             $templateView = 'admin.letter_generator.templates.ownership_certificate';
         }
@@ -102,7 +102,7 @@ class LetterGeneratorController extends Controller
                 'alamat_sekarang' => $request->alamat_sekarang,
                 'keperluan_domisili' => $request->keperluan_domisili,
                 'kepala_desa' => 'Radianus',
-                'jabatan_kepala_desa' => 'Kepala Desa Orakeri',
+                'jabatan_kepala_desa' => 'Kepala Desa Jatinagara',
             ];
             $templateView = 'admin.letter_generator.templates.domicile_certificate';
         }

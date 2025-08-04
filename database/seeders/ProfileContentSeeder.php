@@ -192,7 +192,7 @@ class ProfileContentSeeder extends Seeder
             ['key' => 'social_facebook'],
             [
                 'title' => 'Link Facebook Desa',
-                'content' => 'https://facebook.com/desaorakeri',
+                'content' => 'https://facebook.com/desajatinagara',
                 'type' => 'url',
                 'is_published' => true,
             ]
@@ -202,7 +202,7 @@ class ProfileContentSeeder extends Seeder
             ['key' => 'social_instagram'],
             [
                 'title' => 'Link Instagram Desa',
-                'content' => 'https://instagram.com/desa_orakeri',
+                'content' => 'https://instagram.com/desa_jatinagara',
                 'type' => 'url',
                 'is_published' => true,
             ]
@@ -212,7 +212,7 @@ class ProfileContentSeeder extends Seeder
             ['key' => 'social_twitter'],
             [
                 'title' => 'Link Twitter Desa',
-                'content' => 'https://twitter.com/desa_orakeri',
+                'content' => 'https://twitter.com/desa_jatinagara',
                 'type' => 'url',
                 'is_published' => true,
             ]
@@ -222,7 +222,7 @@ class ProfileContentSeeder extends Seeder
             ['key' => 'social_youtube'],
             [
                 'title' => 'Link YouTube Desa',
-                'content' => 'https://youtube.com/@desaorakeri',
+                'content' => 'https://youtube.com/@desajatinagara',
                 'type' => 'url',
                 'is_published' => true,
             ]
@@ -287,7 +287,7 @@ class ProfileContentSeeder extends Seeder
             ['key' => 'visi'],
             [
                 'title' => 'Visi Desa',
-                'content' => '<p>Mewujudkan Desa Orakeri yang mandiri, sejahtera, dan berbudaya, dengan mengedepankan potensi lokal dan partisipasi aktif masyarakat.</p>',
+                'content' => '<p>Mewujudkan Desa Jatinagara yang mandiri, sejahtera, dan berbudaya, dengan mengedepankan potensi lokal dan partisipasi aktif masyarakat.</p>',
                 'type' => 'richtext',
                 'is_published' => true,
             ]
@@ -309,7 +309,7 @@ class ProfileContentSeeder extends Seeder
             ['key' => 'sejarah'],
             [
                 'title' => 'Sejarah Desa',
-                'content' => '<p>Desa Orakeri memiliki sejarah panjang yang berakar pada masa lampau, dimulai dari pemukiman awal yang didirikan oleh para leluhur yang mencari lahan subur di tepi sungai. Nama "Orakeri" sendiri diyakini berasal dari kata kuno yang berarti "tempat berkumpulnya para petani". Sejak awal berdirinya, desa ini dikenal sebagai lumbung pangan dan pusat kerajinan tangan tradisional.</p><p>Pada masa penjajahan, Desa Orakeri menjadi salah satu basis perjuangan rakyat. Banyak pahlawan lokal yang lahir dari desa ini, berjuang mempertahankan tanah air. Setelah kemerdekaan, Desa Orakeri terus berkembang menjadi desa yang makmur, dengan tetap menjaga nilai-nilai luhur nenek moyang.</p>',
+                'content' => '<p>Desa Jatinagara memiliki sejarah panjang yang berakar pada masa lampau, dimulai dari pemukiman awal yang didirikan oleh para leluhur yang mencari lahan subur di tepi sungai. Nama "Jatinagara" sendiri diyakini berasal dari kata kuno yang berarti "tempat berkumpulnya para petani". Sejak awal berdirinya, desa ini dikenal sebagai lumbung pangan dan pusat kerajinan tangan tradisional.</p><p>Pada masa penjajahan, Desa Jatinagara menjadi salah satu basis perjuangan rakyat. Banyak pahlawan lokal yang lahir dari desa ini, berjuang mempertahankan tanah air. Setelah kemerdekaan, Desa Jatinagara terus berkembang menjadi desa yang makmur, dengan tetap menjaga nilai-nilai luhur nenek moyang.</p>',
                 'type' => 'richtext',
                 'is_published' => true,
             ]
@@ -321,7 +321,7 @@ class ProfileContentSeeder extends Seeder
             [
                 'title' => 'Struktur Pemerintahan Desa',
                 'content' => '
-                    <p>Berikut adalah bagan struktur pemerintahan Desa Orakeri yang bertugas melayani masyarakat dengan sepenuh hati. Setiap posisi diisi oleh individu yang berdedikasi untuk kemajuan desa.</p>
+                    <p>Berikut adalah bagan struktur pemerintahan Desa Jatinagara yang bertugas melayani masyarakat dengan sepenuh hati. Setiap posisi diisi oleh individu yang berdedikasi untuk kemajuan desa.</p>
                     <p><img src="https://source.unsplash.com/random/800x600/?organization-chart,hierarchy,chart" alt="Bagan Struktur Pemerintahan Desa" style="max-width: 100%; height: auto; display: block; margin: 20px auto;"></p>
                     
                     <h3>A. Kepala Desa</h3>
@@ -351,7 +351,7 @@ class ProfileContentSeeder extends Seeder
                     </ul>
 
                     <h3>D. Rukun Tetangga (Contoh)</h3>
-                    <p>Desa Orakeri memiliki [Jumlah RT: ' . $faker->numberBetween(10, 20) . '] Rukun Tetangga yang tersebar di seluruh wilayah dusun.</p>
+                    <p>Desa Jatinagara memiliki [Jumlah RT: ' . $faker->numberBetween(10, 20) . '] Rukun Tetangga yang tersebar di seluruh wilayah dusun.</p>
                     <p>Berikut adalah beberapa contoh Ketua RT:</p>
                     <ul>
                         <li><strong>Ketua RT 001/RW 001 (Dusun Mawar):</strong> ' . $faker->name() . '</li>
@@ -370,7 +370,7 @@ class ProfileContentSeeder extends Seeder
             ['key' => 'sekilas_desa'],
             [
                 'title' => 'Sekilas Desa',
-                'content' => '<p>Desa Orakeri adalah sebuah permata tersembunyi yang kaya akan tradisi, keindahan alam, dan keramahan penduduknya. Kami mengundang Anda untuk menjelajahi potensi pertanian organik kami, keunikan UMKM lokal, serta pesona wisata alam yang menyejukkan jiwa. Mari bersama membangun Desa Orakeri yang mandiri, sejahtera, dan lestari.</p>',
+                'content' => '<p>Desa Jatinagara adalah sebuah permata tersembunyi yang kaya akan tradisi, keindahan alam, dan keramahan penduduknya. Kami mengundang Anda untuk menjelajahi potensi pertanian organik kami, keunikan UMKM lokal, serta pesona wisata alam yang menyejukkan jiwa. Mari bersama membangun Desa Jatinagara yang mandiri, sejahtera, dan lestari.</p>',
                 'type' => 'richtext',
                 'is_published' => true,
             ]
@@ -381,7 +381,7 @@ class ProfileContentSeeder extends Seeder
             ['key' => 'contact_address'],
             [
                 'title' => 'Alamat Kantor Desa',
-                'content' => 'Jl. Raya Desa Orakeri No. 123, Kecamatan Sejahtera, Kabupaten Harmoni, Jawa Barat 43211',
+                'content' => 'Jl. Raya Desa Jatinagara No. 123, Kecamatan Jatinagara, Kabupaten Ciamis, Jawa Barat 43211',
                 'type' => 'text',
                 'is_published' => true,
             ]
@@ -399,7 +399,7 @@ class ProfileContentSeeder extends Seeder
             ['key' => 'contact_email'],
             [
                 'title' => 'Email Desa',
-                'content' => 'info@desaorakeri.com',
+                'content' => 'info@desajatinagara.com',
                 'type' => 'text',
                 'is_published' => true,
             ]
@@ -430,7 +430,7 @@ class ProfileContentSeeder extends Seeder
             ['key' => 'footer_about'],
             [
                 'title' => 'Teks Tentang Desa di Footer',
-                'content' => 'Desa Orakeri adalah komunitas yang kaya budaya dan potensi alam, berkomitmen membangun desa yang mandiri, sejahtera, dan lestari dengan partisipasi masyarakat aktif.',
+                'content' => 'Desa Jatinagara adalah komunitas yang kaya budaya dan potensi alam, berkomitmen membangun desa yang mandiri, sejahtera, dan lestari dengan partisipasi masyarakat aktif.',
                 'type' => 'text',
                 'is_published' => true,
             ]
@@ -441,7 +441,7 @@ class ProfileContentSeeder extends Seeder
             ['key' => 'village_name'],
             [
                 'title' => 'Nama Desa',
-                'content' => 'Desa Orakeri',
+                'content' => 'Desa Jatinagara',
                 'type' => 'text',
                 'is_published' => true,
             ]
@@ -463,7 +463,7 @@ class ProfileContentSeeder extends Seeder
             ['key' => 'site_meta_description'],
             [
                 'title' => 'Deskripsi Meta Situs Web',
-                'content' => 'Website resmi Desa Orakeri. Temukan informasi terbaru, potensi desa, galeri foto, produk lokal, dan layanan administrasi online. Jelajahi keindahan dan kehidupan komunitas kami.',
+                'content' => 'Website resmi Desa Jatinagara. Temukan informasi terbaru, potensi desa, galeri foto, produk lokal, dan layanan administrasi online. Jelajahi keindahan dan kehidupan komunitas kami.',
                 'type' => 'text',
                 'is_published' => true,
             ]

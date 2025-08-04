@@ -53,7 +53,7 @@
                                 @if (!$product->contact_person && !$product->contact_phone && !$product->contact_email)
                                     <p class="text-gray-500">Informasi kontak belum tersedia.</p>
                                 @endif
-                                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $product->contact_phone) }}?text=Halo%20saya%20tertarik%20dengan%20produk%20{{ urlencode($product->name) }}%20di%20website%20Desa%20Orakeri."
+                                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $product->contact_phone) }}?text=Halo%20saya%20tertarik%20dengan%20produk%20{{ urlencode($product->name) }}%20di%20website%20Desa%20Jatinagara."
                                     target="_blank"
                                     class="inline-block bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md mt-4">
                                     <i class="fab fa-whatsapp mr-2"></i> Pesan via WhatsApp

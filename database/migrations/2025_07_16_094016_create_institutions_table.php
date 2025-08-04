@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('institutions', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // Nama lembaga, misal: "PKK Desa Orakeri", "BUMDes Maju Bersama"
+            $table->string('name'); // Nama lembaga, misal: "PKK Desa Jatinagara", "BUMDes Maju Bersama"
             $table->string('slug')->unique(); // Untuk URL detail lembaga
             $table->string('leader_name')->nullable(); // Nama ketua/pimpinan lembaga
             $table->text('description')->nullable(); // Deskripsi atau profil lembaga

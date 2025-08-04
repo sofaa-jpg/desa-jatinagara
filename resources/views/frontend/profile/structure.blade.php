@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Struktur Pemerintahan Desa Orakeri') }}
+            {{ __('Struktur Pemerintahan Desa Jatinagara') }}
         </h2>
     </x-slot>
 
@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h3 class="text-2xl font-bold mb-4 text-desa-brown" data-aos="fade-down">Struktur Organisasi Desa
-                        Orakeri</h3>
+                        Jatinagara</h3>
                     <div class="prose text-gray-700 leading-relaxed mt-6" data-aos="fade-up" data-aos-delay="100">
                         {!! $structure->content ?? 'Struktur pemerintahan desa belum diatur. Silakan hubungi admin.' !!}
                     </div>
