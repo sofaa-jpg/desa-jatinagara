@@ -423,6 +423,61 @@
                     </ul>
                 </li>
 
+                <li x-data="{ open: {{ request()->routeIs('admin.service-procedures.*', 'admin.pengajuan-surat.*', 'admin.letter-generator.*') ? 'true' : 'false' }} }">
+                    <button @click="open = !open"
+                        class="flex items-center justify-between w-full p-2 rounded-lg
+                               text-gray-700 dark:text-gray-200
+                               hover:bg-gray-100 dark:hover:bg-gray-700
+                               focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800
+                               transition-colors duration-200 ease-in-out">
+                        <span class="ms-3 font-medium">Arsip Surat</span>
+                        <svg :class="{ 'rotate-90': open }"
+                            class="w-4 h-4 transform transition-transform duration-200
+                                   text-gray-500 dark:text-gray-400">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                    <ul x-show="open" x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 transform scale-95"
+                        x-transition:enter-end="opacity-100 transform scale-100"
+                        x-transition:leave="transition ease-in duration-75"
+                        x-transition:leave-start="opacity-100 transform scale-100"
+                        x-transition:leave-end="opacity-0 transform scale-95"
+                        class="mt-1 space-y-1 rounded-lg py-1 px-3
+                               bg-gray-50 dark:bg-gray-700">
+                        <li>
+                            <a href="{{ route('admin.service-procedures.index') }}"
+                                class="block w-full p-2 rounded-md text-sm
+                                      text-gray-700 dark:text-gray-200
+                                      hover:bg-gray-200 dark:hover:bg-gray-600
+                                      transition-colors duration-150 ease-in-out
+                                      {{ request()->routeIs('admin.service-procedures.*') ? 'bg-gray-200 dark:bg-gray-600 font-semibold' : '' }}">
+                                Surat Masuk
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.letter-generator.create') }}"
+                                class="block w-full p-2 rounded-md text-sm
+                                      text-gray-700 dark:text-gray-200
+                                      hover:bg-gray-200 dark:hover:bg-gray-600
+                                      transition-colors duration-150 ease-in-out
+                                      {{ request()->routeIs('admin.letter-generator.*') ? 'bg-gray-200 dark:bg-gray-600 font-semibold' : '' }}">
+                                Surat Keluar
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.pengajuan-surat.index') }}"
+                                class="block w-full p-2 rounded-md text-sm
+                                      text-gray-700 dark:text-gray-200
+                                      hover:bg-gray-200 dark:hover:bg-gray-600
+                                      transition-colors duration-150 ease-in-out
+                                      {{ request()->routeIs('admin.pengajuan-surat.*') ? 'bg-gray-200 dark:bg-gray-600 font-semibold' : '' }}">
+                                Pengajuan Surat Online
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li>
                     <a href="{{ route('admin.institutions.index') }}"
                         class="flex items-center p-2 rounded-lg
