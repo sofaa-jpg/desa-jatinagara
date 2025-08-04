@@ -39,7 +39,7 @@ class HomeController extends Controller
 
             $lat = $googleMapsLatitudeContent->content;
             $lon = $googleMapsLongitudeContent->content;
-            $googleMapsEmbedUrl = "http://maps.google.com/maps?q={$lat},{$lon}&hl=en&z=15&output=embed";
+            $googleMapsEmbedUrl = "https://maps.google.com/maps?q={$lat},{$lon}&hl=en&z=15&output=embed";
         }
         // --- AKHIR PERBAIKAN GOOGLE MAPS ---
 

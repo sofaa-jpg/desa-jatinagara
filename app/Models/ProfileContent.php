@@ -44,7 +44,7 @@ class ProfileContent extends Model
         if ($this->Maps_latitude && $this->Maps_longitude) {
             $lat = $this->Maps_latitude;
             $lon = $this->Maps_longitude;
-            return "http://maps.google.com/maps?q={$lat},{$lon}&hl=en&z=15&output=embed";
+            return "https://maps.google.com/maps?q={$lat},{$lon}&hl=en&z=15&output=embed";
         }
         return null;
     }
