@@ -26,7 +26,7 @@
     <title>{{ config('app.name', 'Laravel') }} - {{ $villageName ?? 'Nama Desa' }}</title>
     @livewireStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="https://cdn.tiny.cloud/1/algt269vr4aq8vf2pokvkxyplcwaofury8xlyeekzrg85v42/tinymce/6/tinymce.min.js"
+    <script src="https://cdn.tiny.cloud/1/y4nvrbfb0bh6fm7qg9off4k3qafsdg9ujse6e6sxncewq2vr/tinymce/6/tinymce.min.js"
         referrerpolicy="origin"></script>
     <script>
         function initializeTinyMCE(selector) {
