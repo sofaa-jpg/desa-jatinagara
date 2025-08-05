@@ -14,7 +14,6 @@ class FixStoragePermissions extends Command
     {
         $this->info('Fixing storage permissions and creating directories...');
 
-        // Directories yang diperlukan
         $directories = [
             storage_path('app'),
             storage_path('app/public'),
