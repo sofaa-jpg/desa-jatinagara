@@ -112,20 +112,37 @@ class GalleryController extends Controller
                 'user_agent' => $request->userAgent(),
             ]);
 
-            $request->validate([
+            // Custom validation untuk Azure environment
+            $validationRules = [
                 'name' => 'required|string|max:255|unique:galleries,name,' . $gallery->id,
                 'description' => 'nullable|string',
                 'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240', // Maks 10MB
                 'is_published' => 'nullable|boolean',
-                'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240', // Gambar baru, maks 10MB
                 'captions.*' => 'nullable|string|max:255', // Keterangan untuk gambar baru
-
+                
                 // Validasi untuk gambar yang sudah ada (dikirim dari JS)
                 'existing_image_ids.*' => 'nullable|exists:gallery_images,id', // ID gambar yang sudah ada
                 'existing_captions.*' => 'nullable|string|max:255', // Keterangan gambar yang sudah ada
                 'existing_order.*' => 'nullable|integer', // Urutan gambar yang sudah ada
                 'deleted_images.*' => 'nullable|exists:gallery_images,id', // ID gambar yang ditandai untuk dihapus
-            ]);
+            ];
+            
+            // Conditional validation untuk images jika ada file yang diupload
+            if ($request->hasFile('images') && is_array($request->file('images'))) {
+                $hasValidFiles = false;
+                foreach ($request->file('images') as $file) {
+                    if ($file && $file->isValid()) {
+                        $hasValidFiles = true;
+                        break;
+                    }
+                }
+                
+                if ($hasValidFiles) {
+                    $validationRules['images.*'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240';
+                }
+            }
+            
+            $request->validate($validationRules);
 
             \Log::info('Gallery Update: Validation passed');
 
@@ -178,7 +195,13 @@ class GalleryController extends Controller
 
 
         // --- Tambahkan Gambar Baru ---
-        if ($request->hasFile('images')) {
+        \Log::info('Gallery Update: Checking for new images', [
+            'has_files' => $request->hasFile('images'),
+            'files_in_request' => $request->file('images'),
+            'all_files' => $request->allFiles(),
+        ]);
+        
+        if ($request->hasFile('images') && is_array($request->file('images'))) {
             // Log untuk debugging
             \Log::info('Gallery Update: Processing new images', [
                 'gallery_id' => $gallery->id,
@@ -187,22 +210,33 @@ class GalleryController extends Controller
                 'upload_path_writable' => is_writable(storage_path('app/public/gallery_images')),
             ]);
 
+            // Pastikan directory exists dan writable
+            $uploadDir = storage_path('app/public/gallery_images');
+            if (!file_exists($uploadDir)) {
+                mkdir($uploadDir, 0755, true);
+                \Log::info('Gallery Update: Created upload directory', ['path' => $uploadDir]);
+            }
+
             // Dapatkan urutan tertinggi saat ini untuk galeri ini
             $maxOrder = GalleryImage::where('gallery_id', $gallery->id)->max('order');
             $nextOrder = is_null($maxOrder) ? 1 : $maxOrder + 1;
+            $uploadedCount = 0;
 
             foreach ($request->file('images') as $key => $imageFile) {
-                if ($imageFile) { // Pastikan file tidak null
+                if ($imageFile && $imageFile->isValid()) { // Pastikan file valid
                     try {
                         // Log detail file
                         \Log::info('Gallery Update: Processing image file', [
+                            'index' => $key,
                             'original_name' => $imageFile->getClientOriginalName(),
                             'mime_type' => $imageFile->getMimeType(),
                             'size' => $imageFile->getSize(),
                             'is_valid' => $imageFile->isValid(),
                             'error' => $imageFile->getError(),
+                            'temp_path' => $imageFile->getRealPath(),
                         ]);
 
+                        // Try to store file
                         $imagePath = $imageFile->store('gallery_images', 'public');
                         
                         if ($imagePath) {
@@ -213,10 +247,13 @@ class GalleryController extends Controller
                                 'order' => $nextOrder++, // Beri urutan baru yang unik
                             ]);
                             
+                            $uploadedCount++;
+                            
                             \Log::info('Gallery Update: Image uploaded successfully', [
                                 'image_id' => $galleryImage->id,
                                 'path' => $imagePath,
                                 'full_path' => storage_path('app/public/' . $imagePath),
+                                'file_exists' => file_exists(storage_path('app/public/' . $imagePath)),
                             ]);
                         } else {
                             \Log::error('Gallery Update: Failed to store image', [
@@ -226,15 +263,31 @@ class GalleryController extends Controller
                         }
                     } catch (\Exception $e) {
                         \Log::error('Gallery Update: Exception during image upload', [
-                            'original_name' => $imageFile->getClientOriginalName(),
+                            'index' => $key,
+                            'original_name' => $imageFile ? $imageFile->getClientOriginalName() : 'null',
                             'error' => $e->getMessage(),
                             'trace' => $e->getTraceAsString()
                         ]);
                     }
+                } else {
+                    \Log::warning('Gallery Update: Invalid or empty file at index', [
+                        'index' => $key,
+                        'file_present' => $imageFile !== null,
+                        'is_valid' => $imageFile ? $imageFile->isValid() : false,
+                        'error' => $imageFile ? $imageFile->getError() : 'File is null',
+                    ]);
                 }
             }
+            
+            \Log::info('Gallery Update: Completed processing images', [
+                'total_files' => count($request->file('images')),
+                'uploaded_count' => $uploadedCount,
+            ]);
         } else {
-            \Log::info('Gallery Update: No new images to process');
+            \Log::info('Gallery Update: No new images to process', [
+                'has_files' => $request->hasFile('images'),
+                'files_type' => gettype($request->file('images')),
+            ]);
         }
 
             \Log::info('Gallery Update: Successfully completed', ['gallery_id' => $gallery->id]);

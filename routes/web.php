@@ -82,9 +82,10 @@ Route::get('/profil/informasi-desa', function() {
 
 // --- DEBUG ROUTES (Hapus di production!) ---
 Route::get('/debug/upload-config', function() {
-    if (!app()->environment('local', 'staging')) {
-        abort(404); // Hanya bisa diakses di development/staging
-    }
+    // Allow in production for debugging
+    // if (!app()->environment('local', 'staging')) {
+    //     abort(404);
+    // }
     
     $info = [
         'PHP Upload Limits' => [
@@ -127,9 +128,10 @@ Route::get('/debug/upload-config', function() {
 
 // Test upload route for debugging
 Route::match(['GET', 'POST'], '/debug/test-upload', function(\Illuminate\Http\Request $request) {
-    if (!app()->environment('local', 'staging')) {
-        abort(404);
-    }
+    // Allow in production for debugging
+    // if (!app()->environment('local', 'staging')) {
+    //     abort(404);
+    // }
     
     if ($request->isMethod('POST')) {
         \Log::info('Debug Upload Test: POST received', [
@@ -174,9 +176,10 @@ Route::match(['GET', 'POST'], '/debug/test-upload', function(\Illuminate\Http\Re
 
 // Clear logs for debugging
 Route::get('/debug/clear-logs', function() {
-    if (!app()->environment('local', 'staging')) {
-        abort(404);
-    }
+    // Allow in production for debugging
+    // if (!app()->environment('local', 'staging')) {
+    //     abort(404);
+    // }
     
     $logFile = storage_path('logs/laravel.log');
     if (file_exists($logFile)) {
@@ -186,6 +189,47 @@ Route::get('/debug/clear-logs', function() {
     
     return response()->json(['success' => false, 'message' => 'Log file not found']);
 })->name('debug.clear-logs');
+
+// Test PHP upload limits
+Route::get('/debug/php-upload-limits', function() {
+    return response()->json([
+        'php_upload_limits' => [
+            'upload_max_filesize' => ini_get('upload_max_filesize'),
+            'upload_max_filesize_bytes' => return_bytes(ini_get('upload_max_filesize')),
+            'post_max_size' => ini_get('post_max_size'),
+            'post_max_size_bytes' => return_bytes(ini_get('post_max_size')),
+            'max_file_uploads' => ini_get('max_file_uploads'),
+            'memory_limit' => ini_get('memory_limit'),
+            'max_execution_time' => ini_get('max_execution_time'),
+            'file_uploads' => ini_get('file_uploads'),
+            'upload_tmp_dir' => ini_get('upload_tmp_dir'),
+        ],
+        'server_info' => [
+            'temp_dir' => sys_get_temp_dir(),
+            'temp_dir_writable' => is_writable(sys_get_temp_dir()),
+            'server_software' => $_SERVER['SERVER_SOFTWARE'] ?? 'Unknown',
+            'php_version' => PHP_VERSION,
+            'running_in_azure' => !empty($_SERVER['WEBSITE_SITE_NAME']),
+        ]
+    ], 200, [], JSON_PRETTY_PRINT);
+})->name('debug.php-upload-limits');
+
+if (!function_exists('return_bytes')) {
+    function return_bytes($val) {
+        $val = trim($val);
+        $last = strtolower($val[strlen($val)-1]);
+        $val = substr($val, 0, -1);
+        switch($last) {
+            case 'g':
+                $val *= 1024;
+            case 'm':
+                $val *= 1024;
+            case 'k':
+                $val *= 1024;
+        }
+        return $val;
+    }
+}
 
 // --- Rute Komentar (Pengiriman) ---
 Route::post('/news/{news}/comments', [CommentController::class, 'store'])->name('comments.store');

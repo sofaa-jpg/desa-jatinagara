@@ -20,6 +20,11 @@ class FixStoragePermissions extends Command
             storage_path('app/public/gallery_images'),
             storage_path('app/public/gallery_covers'),
             storage_path('logs'),
+            storage_path('framework'),
+            storage_path('framework/cache'),
+            storage_path('framework/sessions'), 
+            storage_path('framework/views'),
+            storage_path('framework/testing'),
         ];
 
         foreach ($directories as $directory) {
