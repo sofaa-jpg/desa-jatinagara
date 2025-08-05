@@ -423,7 +423,7 @@
                     </ul>
                 </li>
 
-                <li x-data="{ open: {{ request()->routeIs('admin.service-procedures.*', 'admin.pengajuan-surat.*', 'admin.letter-generator.*') ? 'true' : 'false' }} }">
+                <li x-data="{ open: {{ request()->routeIs('admin.arsip-surat.*', 'admin.surat-masuk.*', 'admin.surat-keluar.*', 'admin.jenis-surat.*') ? 'true' : 'false' }} }">
                     <button @click="open = !open"
                         class="flex items-center justify-between w-full p-2 rounded-lg
                                text-gray-700 dark:text-gray-200
@@ -446,52 +446,62 @@
                         class="mt-1 space-y-1 rounded-lg py-1 px-3
                                bg-gray-50 dark:bg-gray-700">
                         <li>
-                            <a href="{{ route('admin.service-procedures.index') }}"
+                            <a href="{{ route('admin.arsip-surat.index') }}"
                                 class="block w-full p-2 rounded-md text-sm
                                       text-gray-700 dark:text-gray-200
                                       hover:bg-gray-200 dark:hover:bg-gray-600
                                       transition-colors duration-150 ease-in-out
-                                      {{ request()->routeIs('admin.service-procedures.*') ? 'bg-gray-200 dark:bg-gray-600 font-semibold' : '' }}">
+                                      {{ request()->routeIs('admin.arsip-surat.index') ? 'bg-gray-200 dark:bg-gray-600 font-semibold' : '' }}">
                                 Beranda
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.service-procedures.index') }}"
+                            <a href="{{ route('admin.surat-masuk.index') }}"
                                 class="block w-full p-2 rounded-md text-sm
                                       text-gray-700 dark:text-gray-200
                                       hover:bg-gray-200 dark:hover:bg-gray-600
                                       transition-colors duration-150 ease-in-out
-                                      {{ request()->routeIs('admin.service-procedures.*') ? 'bg-gray-200 dark:bg-gray-600 font-semibold' : '' }}">
+                                      {{ request()->routeIs('admin.surat-masuk.*') ? 'bg-gray-200 dark:bg-gray-600 font-semibold' : '' }}">
                                 Surat Masuk
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.letter-generator.create') }}"
+                            <a href="{{ route('admin.surat-keluar.index') }}"
                                 class="block w-full p-2 rounded-md text-sm
                                       text-gray-700 dark:text-gray-200
                                       hover:bg-gray-200 dark:hover:bg-gray-600
                                       transition-colors duration-150 ease-in-out
-                                      {{ request()->routeIs('admin.letter-generator.*') ? 'bg-gray-200 dark:bg-gray-600 font-semibold' : '' }}">
+                                      {{ request()->routeIs('admin.surat-keluar.*') ? 'bg-gray-200 dark:bg-gray-600 font-semibold' : '' }}">
                                 Surat Keluar
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.pengajuan-surat.index') }}"
+                            <a href="{{ route('admin.jenis-surat.index') }}"
                                 class="block w-full p-2 rounded-md text-sm
                                       text-gray-700 dark:text-gray-200
                                       hover:bg-gray-200 dark:hover:bg-gray-600
                                       transition-colors duration-150 ease-in-out
-                                      {{ request()->routeIs('admin.pengajuan-surat.*') ? 'bg-gray-200 dark:bg-gray-600 font-semibold' : '' }}">
+                                      {{ request()->routeIs('admin.jenis-surat.*') ? 'bg-gray-200 dark:bg-gray-600 font-semibold' : '' }}">
+                                Jenis Surat
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.arsip-surat.statistik') }}"
+                                class="block w-full p-2 rounded-md text-sm
+                                      text-gray-700 dark:text-gray-200
+                                      hover:bg-gray-200 dark:hover:bg-gray-600
+                                      transition-colors duration-150 ease-in-out
+                                      {{ request()->routeIs('admin.arsip-surat.statistik') ? 'bg-gray-200 dark:bg-gray-600 font-semibold' : '' }}">
                                 Grafik Statistik
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.service-procedures.index') }}"
+                            <a href="{{ route('admin.arsip-surat.laporan') }}"
                                 class="block w-full p-2 rounded-md text-sm
                                       text-gray-700 dark:text-gray-200
                                       hover:bg-gray-200 dark:hover:bg-gray-600
                                       transition-colors duration-150 ease-in-out
-                                      {{ request()->routeIs('admin.service-procedures.*') ? 'bg-gray-200 dark:bg-gray-600 font-semibold' : '' }}">
+                                      {{ request()->routeIs('admin.arsip-surat.laporan') ? 'bg-gray-200 dark:bg-gray-600 font-semibold' : '' }}">
                                 Laporan
                             </a>
                         </li>
@@ -631,6 +641,9 @@
             }
         }
     </script>
+    
+    @livewireScripts
+    @stack('scripts')
 </body>
 
 </html>
