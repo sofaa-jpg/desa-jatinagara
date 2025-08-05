@@ -100,17 +100,6 @@ class GalleryController extends Controller
     public function update(Request $request, Gallery $gallery)
     {
         try {
-            // Debug: Log awal request
-            \Log::info('Gallery Update: Method called', [
-                'gallery_id' => $gallery->id,
-                'gallery_name' => $gallery->name,
-                'request_method' => $request->method(),
-                'has_files' => $request->hasFile('images'),
-                'files_count' => $request->hasFile('images') ? count($request->file('images')) : 0,
-                'all_input_keys' => array_keys($request->all()),
-                'request_size' => $request->server('CONTENT_LENGTH'),
-                'user_agent' => $request->userAgent(),
-            ]);
 
             // Custom validation untuk Azure environment
             $validationRules = [
@@ -143,8 +132,6 @@ class GalleryController extends Controller
             }
             
             $request->validate($validationRules);
-
-            \Log::info('Gallery Update: Validation passed');
 
         // --- Update Cover Image ---
         $coverImagePath = $gallery->cover_image;
@@ -195,26 +182,11 @@ class GalleryController extends Controller
 
 
         // --- Tambahkan Gambar Baru ---
-        \Log::info('Gallery Update: Checking for new images', [
-            'has_files' => $request->hasFile('images'),
-            'files_in_request' => $request->file('images'),
-            'all_files' => $request->allFiles(),
-        ]);
-        
         if ($request->hasFile('images') && is_array($request->file('images'))) {
-            // Log untuk debugging
-            \Log::info('Gallery Update: Processing new images', [
-                'gallery_id' => $gallery->id,
-                'images_count' => count($request->file('images')),
-                'upload_path' => storage_path('app/public/gallery_images'),
-                'upload_path_writable' => is_writable(storage_path('app/public/gallery_images')),
-            ]);
-
             // Pastikan directory exists dan writable
             $uploadDir = storage_path('app/public/gallery_images');
             if (!file_exists($uploadDir)) {
                 mkdir($uploadDir, 0755, true);
-                \Log::info('Gallery Update: Created upload directory', ['path' => $uploadDir]);
             }
 
             // Dapatkan urutan tertinggi saat ini untuk galeri ini
@@ -225,17 +197,6 @@ class GalleryController extends Controller
             foreach ($request->file('images') as $key => $imageFile) {
                 if ($imageFile && $imageFile->isValid()) { // Pastikan file valid
                     try {
-                        // Log detail file
-                        \Log::info('Gallery Update: Processing image file', [
-                            'index' => $key,
-                            'original_name' => $imageFile->getClientOriginalName(),
-                            'mime_type' => $imageFile->getMimeType(),
-                            'size' => $imageFile->getSize(),
-                            'is_valid' => $imageFile->isValid(),
-                            'error' => $imageFile->getError(),
-                            'temp_path' => $imageFile->getRealPath(),
-                        ]);
-
                         // Try to store file
                         $imagePath = $imageFile->store('gallery_images', 'public');
                         
@@ -248,69 +209,21 @@ class GalleryController extends Controller
                             ]);
                             
                             $uploadedCount++;
-                            
-                            \Log::info('Gallery Update: Image uploaded successfully', [
-                                'image_id' => $galleryImage->id,
-                                'path' => $imagePath,
-                                'full_path' => storage_path('app/public/' . $imagePath),
-                                'file_exists' => file_exists(storage_path('app/public/' . $imagePath)),
-                            ]);
-                        } else {
-                            \Log::error('Gallery Update: Failed to store image', [
-                                'original_name' => $imageFile->getClientOriginalName(),
-                                'error' => 'store() returned false'
-                            ]);
                         }
                     } catch (\Exception $e) {
-                        \Log::error('Gallery Update: Exception during image upload', [
-                            'index' => $key,
-                            'original_name' => $imageFile ? $imageFile->getClientOriginalName() : 'null',
-                            'error' => $e->getMessage(),
-                            'trace' => $e->getTraceAsString()
-                        ]);
+                        // Silent fail untuk individual images
+                        continue;
                     }
-                } else {
-                    \Log::warning('Gallery Update: Invalid or empty file at index', [
-                        'index' => $key,
-                        'file_present' => $imageFile !== null,
-                        'is_valid' => $imageFile ? $imageFile->isValid() : false,
-                        'error' => $imageFile ? $imageFile->getError() : 'File is null',
-                    ]);
                 }
             }
-            
-            \Log::info('Gallery Update: Completed processing images', [
-                'total_files' => count($request->file('images')),
-                'uploaded_count' => $uploadedCount,
-            ]);
-        } else {
-            \Log::info('Gallery Update: No new images to process', [
-                'has_files' => $request->hasFile('images'),
-                'files_type' => gettype($request->file('images')),
-            ]);
         }
-
-            \Log::info('Gallery Update: Successfully completed', ['gallery_id' => $gallery->id]);
             
             return redirect()->route('admin.galleries.index')->with('success', 'Album galeri berhasil diperbarui.');
             
         } catch (\Illuminate\Validation\ValidationException $e) {
-            \Log::error('Gallery Update: Validation failed', [
-                'gallery_id' => $gallery->id,
-                'errors' => $e->errors(),
-                'input' => $request->all()
-            ]);
             throw $e; // Re-throw validation exception
             
         } catch (\Exception $e) {
-            \Log::error('Gallery Update: Exception occurred', [
-                'gallery_id' => $gallery->id,
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine()
-            ]);
-            
             return redirect()->back()
                 ->withInput()
                 ->with('error', 'Terjadi kesalahan saat memperbarui album: ' . $e->getMessage());

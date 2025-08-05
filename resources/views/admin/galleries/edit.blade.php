@@ -208,36 +208,16 @@
             });
         });
 
-        // Debug form submission
+        // Form submission feedback
         document.getElementById('gallery-form').addEventListener('submit', function(e) {
-            console.log('🚀 Form submission started');
-            
             // Check if there are new images
             const newImages = document.querySelectorAll('input[name="images[]"]');
             let hasNewImages = false;
-            let imageFiles = [];
             
             newImages.forEach((input, index) => {
                 if (input.files && input.files.length > 0) {
                     hasNewImages = true;
-                    for (let file of input.files) {
-                        imageFiles.push({
-                            name: file.name,
-                            size: file.size,
-                            type: file.type,
-                            lastModified: file.lastModified
-                        });
-                    }
                 }
-            });
-            
-            console.log('📊 Form Debug Info:', {
-                hasNewImages: hasNewImages,
-                imageFiles: imageFiles,
-                formData: new FormData(this),
-                action: this.action,
-                method: this.method,
-                enctype: this.enctype
             });
             
             if (hasNewImages) {
@@ -245,32 +225,5 @@
                 document.getElementById('submit-btn').disabled = true;
             }
         });
-
-        // Monitor form data before submission
-        function debugFormData() {
-            const form = document.getElementById('gallery-form');
-            const formData = new FormData(form);
-            
-            console.log('📋 FormData Contents:');
-            for (let [key, value] of formData.entries()) {
-                if (value instanceof File) {
-                    console.log(`${key}:`, {
-                        name: value.name,
-                        size: value.size,
-                        type: value.type
-                    });
-                } else {
-                    console.log(`${key}:`, value);
-                }
-            }
-        }
-
-        // Add debug button (remove in production)
-        const debugBtn = document.createElement('button');
-        debugBtn.type = 'button';
-        debugBtn.innerHTML = '🐛 Debug Form';
-        debugBtn.className = 'ml-2 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-md';
-        debugBtn.onclick = debugFormData;
-        document.getElementById('submit-btn').parentNode.appendChild(debugBtn);
     </script>
 </x-admin-layout>
