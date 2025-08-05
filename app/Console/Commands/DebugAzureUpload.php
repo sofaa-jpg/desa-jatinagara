@@ -103,6 +103,32 @@ class DebugAzureUpload extends Command
             $this->line("  {$var}: {$value}");
         }
         
+        // Check current PHP upload settings
+        $this->line("");
+        $this->line("  📋 Current PHP Upload Settings:");
+        $uploadMax = ini_get('upload_max_filesize');
+        $postMax = ini_get('post_max_size');
+        
+        $uploadStatus = $this->parseBytes($uploadMax) >= $this->parseBytes('10M') ? '✅' : '❌';
+        $postStatus = $this->parseBytes($postMax) >= $this->parseBytes('15M') ? '✅' : '❌';
+        
+        $this->line("    upload_max_filesize: {$uploadMax} {$uploadStatus}");
+        $this->line("    post_max_size: {$postMax} {$postStatus}");
+        
+        if ($uploadStatus === '❌' || $postStatus === '❌') {
+            $this->warn("  ⚠️  PHP upload limits too small for file uploads!");
+            $this->line("  💡 To fix in Azure App Service:");
+            $this->line("     1. Go to Azure Portal > App Service > Configuration");
+            $this->line("     2. Add Application Settings:");
+            $this->line("        PHP_INI_UPLOAD_MAX_FILESIZE = 40M");
+            $this->line("        PHP_INI_POST_MAX_SIZE = 50M");
+            $this->line("        PHP_INI_MAX_FILE_UPLOADS = 20");
+            $this->line("        PHP_INI_MEMORY_LIMIT = 256M");
+            $this->line("     3. Restart the app service");
+            $this->line("");
+            $this->line("  🔧 Alternative: Deploy .user.ini and web.config files");
+        }
+        
         // Check disk space
         $freeSpace = disk_free_space(storage_path());
         $totalSpace = disk_total_space(storage_path());
@@ -110,6 +136,21 @@ class DebugAzureUpload extends Command
         $totalGB = round($totalSpace / 1024 / 1024 / 1024, 2);
         
         $this->line("  Disk Space: {$freeGB}GB free of {$totalGB}GB total");
+    }
+    
+    private function parseBytes($val) {
+        $val = trim($val);
+        $last = strtolower($val[strlen($val)-1]);
+        $val = substr($val, 0, -1);
+        switch($last) {
+            case 'g':
+                $val *= 1024;
+            case 'm':
+                $val *= 1024;
+            case 'k':
+                $val *= 1024;
+        }
+        return $val;
     }
 
     private function fixCommonIssues()
