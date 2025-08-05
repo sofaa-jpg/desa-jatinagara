@@ -17,6 +17,10 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\ThemeSettingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VisionMissionController;
+use App\Http\Controllers\Admin\ArsipSuratController;
+use App\Http\Controllers\Admin\SuratMasukController;
+use App\Http\Controllers\Admin\SuratKeluarController;
+use App\Http\Controllers\Admin\JenisSuratController;
 use App\Http\Controllers\AdminController;
 
 // route login
@@ -24,7 +28,7 @@ Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
 
-Route::prefix('admin')->middleware(['auth', 'verified', 'role:admin'])->group(function () {
+Route::prefix('admin')->middleware(['web', 'auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/theme', [ThemeSettingController::class, 'edit'])->name('admin.theme.edit');
     Route::post('/theme', [ThemeSettingController::class, 'update'])->name('admin.theme.update');
 
@@ -82,4 +86,26 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'role:admin'])->group(fu
     
     // Alias routes untuk dashboard compatibility
     Route::get('/service-requests/{pengajuanSurat}', [PengajuanSuratController::class, 'show'])->name('admin.service-requests.show');
+
+    // --- Rute Arsip Surat ---
+    // Beranda Arsip Surat
+    Route::get('/arsip-surat', [ArsipSuratController::class, 'index'])->name('admin.arsip-surat.index');
+    Route::get('/arsip-surat/statistik', [ArsipSuratController::class, 'statistik'])->name('admin.arsip-surat.statistik');
+    Route::get('/arsip-surat/laporan', [ArsipSuratController::class, 'laporan'])->name('admin.arsip-surat.laporan');
+    Route::post('/arsip-surat/export-laporan', [ArsipSuratController::class, 'exportLaporan'])->name('admin.arsip-surat.export-laporan');
+
+    // Jenis Surat Management
+    Route::resource('jenis-surat', JenisSuratController::class)->names('admin.jenis-surat');
+    Route::patch('/jenis-surat/{jenisSurat}/toggle-status', [JenisSuratController::class, 'toggleStatus'])->name('admin.jenis-surat.toggle-status');
+    Route::get('/api/jenis-surat', [JenisSuratController::class, 'getJenisSurat'])->name('admin.api.jenis-surat');
+
+    // Surat Masuk Management
+    Route::resource('surat-masuk', SuratMasukController::class)->names('admin.surat-masuk');
+    Route::get('/surat-masuk/{suratMasuk}/download', [SuratMasukController::class, 'downloadFile'])->name('admin.surat-masuk.download');
+    Route::patch('/surat-masuk/{suratMasuk}/disposisi', [SuratMasukController::class, 'updateDisposisi'])->name('admin.surat-masuk.update-disposisi');
+
+    // Surat Keluar Management
+    Route::resource('surat-keluar', SuratKeluarController::class)->names('admin.surat-keluar');
+    Route::get('/surat-keluar/{suratKeluar}/download', [SuratKeluarController::class, 'downloadFile'])->name('admin.surat-keluar.download');
+    Route::patch('/surat-keluar/{suratKeluar}/status', [SuratKeluarController::class, 'updateStatus'])->name('admin.surat-keluar.update-status');
 });
