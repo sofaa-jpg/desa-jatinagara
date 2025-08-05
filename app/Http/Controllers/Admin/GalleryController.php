@@ -164,21 +164,62 @@ class GalleryController extends Controller
 
         // --- Tambahkan Gambar Baru ---
         if ($request->hasFile('images')) {
+            // Log untuk debugging
+            \Log::info('Gallery Update: Processing new images', [
+                'gallery_id' => $gallery->id,
+                'images_count' => count($request->file('images')),
+                'upload_path' => storage_path('app/public/gallery_images'),
+                'upload_path_writable' => is_writable(storage_path('app/public/gallery_images')),
+            ]);
+
             // Dapatkan urutan tertinggi saat ini untuk galeri ini
             $maxOrder = GalleryImage::where('gallery_id', $gallery->id)->max('order');
             $nextOrder = is_null($maxOrder) ? 1 : $maxOrder + 1;
 
             foreach ($request->file('images') as $key => $imageFile) {
                 if ($imageFile) { // Pastikan file tidak null
-                    $imagePath = $imageFile->store('gallery_images', 'public');
-                    GalleryImage::create([
-                        'gallery_id' => $gallery->id,
-                        'path' => $imagePath,
-                        'caption' => $request->captions[$key] ?? null,
-                        'order' => $nextOrder++, // Beri urutan baru yang unik
-                    ]);
+                    try {
+                        // Log detail file
+                        \Log::info('Gallery Update: Processing image file', [
+                            'original_name' => $imageFile->getClientOriginalName(),
+                            'mime_type' => $imageFile->getMimeType(),
+                            'size' => $imageFile->getSize(),
+                            'is_valid' => $imageFile->isValid(),
+                            'error' => $imageFile->getError(),
+                        ]);
+
+                        $imagePath = $imageFile->store('gallery_images', 'public');
+                        
+                        if ($imagePath) {
+                            $galleryImage = GalleryImage::create([
+                                'gallery_id' => $gallery->id,
+                                'path' => $imagePath,
+                                'caption' => $request->captions[$key] ?? null,
+                                'order' => $nextOrder++, // Beri urutan baru yang unik
+                            ]);
+                            
+                            \Log::info('Gallery Update: Image uploaded successfully', [
+                                'image_id' => $galleryImage->id,
+                                'path' => $imagePath,
+                                'full_path' => storage_path('app/public/' . $imagePath),
+                            ]);
+                        } else {
+                            \Log::error('Gallery Update: Failed to store image', [
+                                'original_name' => $imageFile->getClientOriginalName(),
+                                'error' => 'store() returned false'
+                            ]);
+                        }
+                    } catch (\Exception $e) {
+                        \Log::error('Gallery Update: Exception during image upload', [
+                            'original_name' => $imageFile->getClientOriginalName(),
+                            'error' => $e->getMessage(),
+                            'trace' => $e->getTraceAsString()
+                        ]);
+                    }
                 }
             }
+        } else {
+            \Log::info('Gallery Update: No new images to process');
         }
 
         return redirect()->route('admin.galleries.index')->with('success', 'Album galeri berhasil diperbarui.');

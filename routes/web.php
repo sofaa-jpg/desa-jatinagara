@@ -80,6 +80,51 @@ Route::get('/profil/informasi-desa', function() {
     return view('frontend.profile.village_info', compact('villageName'));
 })->name('profil.info');
 
+// --- DEBUG ROUTES (Hapus di production!) ---
+Route::get('/debug/upload-config', function() {
+    if (!app()->environment('local', 'staging')) {
+        abort(404); // Hanya bisa diakses di development/staging
+    }
+    
+    $info = [
+        'PHP Upload Limits' => [
+            'upload_max_filesize' => ini_get('upload_max_filesize'),
+            'post_max_size' => ini_get('post_max_size'),
+            'max_file_uploads' => ini_get('max_file_uploads'),
+            'memory_limit' => ini_get('memory_limit'),
+            'max_execution_time' => ini_get('max_execution_time'),
+        ],
+        'Storage Info' => [
+            'storage_path' => storage_path(),
+            'storage_writable' => is_writable(storage_path()),
+            'public_storage_path' => storage_path('app/public'),
+            'public_storage_exists' => file_exists(storage_path('app/public')),
+            'public_storage_writable' => is_writable(storage_path('app/public')),
+            'gallery_images_path' => storage_path('app/public/gallery_images'),
+            'gallery_images_exists' => file_exists(storage_path('app/public/gallery_images')),
+            'gallery_images_writable' => is_writable(storage_path('app/public/gallery_images')),
+        ],
+        'Symlink Info' => [
+            'public_storage_link' => public_path('storage'),
+            'public_storage_link_exists' => file_exists(public_path('storage')),
+            'is_symlink' => is_link(public_path('storage')),
+            'symlink_target' => is_link(public_path('storage')) ? readlink(public_path('storage')) : 'Not a symlink',
+        ],
+        'Disk Space' => [
+            'free_space_gb' => round(disk_free_space(storage_path()) / 1024 / 1024 / 1024, 2),
+            'total_space_gb' => round(disk_total_space(storage_path()) / 1024 / 1024 / 1024, 2),
+        ],
+        'Laravel Config' => [
+            'filesystem_default' => config('filesystems.default'),
+            'filesystem_public_driver' => config('filesystems.disks.public.driver'),
+            'filesystem_public_root' => config('filesystems.disks.public.root'),
+            'filesystem_public_url' => config('filesystems.disks.public.url'),
+        ]
+    ];
+    
+    return response()->json($info, 200, [], JSON_PRETTY_PRINT);
+})->name('debug.upload-config');
+
 // --- Rute Komentar (Pengiriman) ---
 Route::post('/news/{news}/comments', [CommentController::class, 'store'])->name('comments.store');
 

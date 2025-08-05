@@ -31,7 +31,7 @@
                                             Tidak ada Gambar</div>
                                     @endif
                                     <h4 class="text-xl font-bold text-desa-green mb-2">{{ $gallery->name }}</h4>
-                                    <p class="text-gray-700 text-sm">{{ Str::limit($gallery->description, 100) }}</p>
+                                    <p class="text-gray-700 text-sm">{{ Str::limit(strip_tags($gallery->description), 100) }}</p>
                                     <p class="text-gray-600 text-xs mt-2">{{ $gallery->images->count() }} Foto</p>
                                     <span
                                         class="mt-3 inline-block bg-desa-skyblue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md text-sm">Lihat
