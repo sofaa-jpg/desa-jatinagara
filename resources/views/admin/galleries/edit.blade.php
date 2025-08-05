@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <form action="{{ route('admin.galleries.update', $gallery) }}" method="POST"
-                        enctype="multipart/form-data">
+                        enctype="multipart/form-data" id="gallery-form">
                         @csrf
                         @method('PUT')
 
@@ -131,7 +131,7 @@
                         <div class="flex items-center justify-end mt-8">
                             <a href="{{ route('admin.galleries.index') }}"
                                 class="text-gray-600 hover:text-gray-900 mr-4">Batal</a>
-                            <button type="submit"
+                            <button type="submit" id="submit-btn"
                                 class="bg-desa-green hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md">
                                 Perbarui Album
                             </button>
@@ -207,5 +207,70 @@
                 }
             });
         });
+
+        // Debug form submission
+        document.getElementById('gallery-form').addEventListener('submit', function(e) {
+            console.log('🚀 Form submission started');
+            
+            // Check if there are new images
+            const newImages = document.querySelectorAll('input[name="images[]"]');
+            let hasNewImages = false;
+            let imageFiles = [];
+            
+            newImages.forEach((input, index) => {
+                if (input.files && input.files.length > 0) {
+                    hasNewImages = true;
+                    for (let file of input.files) {
+                        imageFiles.push({
+                            name: file.name,
+                            size: file.size,
+                            type: file.type,
+                            lastModified: file.lastModified
+                        });
+                    }
+                }
+            });
+            
+            console.log('📊 Form Debug Info:', {
+                hasNewImages: hasNewImages,
+                imageFiles: imageFiles,
+                formData: new FormData(this),
+                action: this.action,
+                method: this.method,
+                enctype: this.enctype
+            });
+            
+            if (hasNewImages) {
+                document.getElementById('submit-btn').innerHTML = 'Mengupload... Harap Tunggu';
+                document.getElementById('submit-btn').disabled = true;
+            }
+        });
+
+        // Monitor form data before submission
+        function debugFormData() {
+            const form = document.getElementById('gallery-form');
+            const formData = new FormData(form);
+            
+            console.log('📋 FormData Contents:');
+            for (let [key, value] of formData.entries()) {
+                if (value instanceof File) {
+                    console.log(`${key}:`, {
+                        name: value.name,
+                        size: value.size,
+                        type: value.type
+                    });
+                } else {
+                    console.log(`${key}:`, value);
+                }
+            }
+        }
+
+        // Add debug button (remove in production)
+        const debugBtn = document.createElement('button');
+        debugBtn.type = 'button';
+        debugBtn.innerHTML = '🐛 Debug Form';
+        debugBtn.className = 'ml-2 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-md';
+        debugBtn.onclick = debugFormData;
+        document.getElementById('submit-btn').parentNode.appendChild(debugBtn);
     </script>
 </x-admin-layout>

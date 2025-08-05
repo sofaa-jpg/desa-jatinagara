@@ -99,20 +99,35 @@ class GalleryController extends Controller
      */
     public function update(Request $request, Gallery $gallery)
     {
-        $request->validate([
-            'name' => 'required|string|max:255|unique:galleries,name,' . $gallery->id,
-            'description' => 'nullable|string',
-            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240', // Maks 10MB
-            'is_published' => 'nullable|boolean',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240', // Gambar baru, maks 10MB
-            'captions.*' => 'nullable|string|max:255', // Keterangan untuk gambar baru
+        try {
+            // Debug: Log awal request
+            \Log::info('Gallery Update: Method called', [
+                'gallery_id' => $gallery->id,
+                'gallery_name' => $gallery->name,
+                'request_method' => $request->method(),
+                'has_files' => $request->hasFile('images'),
+                'files_count' => $request->hasFile('images') ? count($request->file('images')) : 0,
+                'all_input_keys' => array_keys($request->all()),
+                'request_size' => $request->server('CONTENT_LENGTH'),
+                'user_agent' => $request->userAgent(),
+            ]);
 
-            // Validasi untuk gambar yang sudah ada (dikirim dari JS)
-            'existing_image_ids.*' => 'nullable|exists:gallery_images,id', // ID gambar yang sudah ada
-            'existing_captions.*' => 'nullable|string|max:255', // Keterangan gambar yang sudah ada
-            'existing_order.*' => 'nullable|integer', // Urutan gambar yang sudah ada
-            'deleted_images.*' => 'nullable|exists:gallery_images,id', // ID gambar yang ditandai untuk dihapus
-        ]);
+            $request->validate([
+                'name' => 'required|string|max:255|unique:galleries,name,' . $gallery->id,
+                'description' => 'nullable|string',
+                'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240', // Maks 10MB
+                'is_published' => 'nullable|boolean',
+                'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240', // Gambar baru, maks 10MB
+                'captions.*' => 'nullable|string|max:255', // Keterangan untuk gambar baru
+
+                // Validasi untuk gambar yang sudah ada (dikirim dari JS)
+                'existing_image_ids.*' => 'nullable|exists:gallery_images,id', // ID gambar yang sudah ada
+                'existing_captions.*' => 'nullable|string|max:255', // Keterangan gambar yang sudah ada
+                'existing_order.*' => 'nullable|integer', // Urutan gambar yang sudah ada
+                'deleted_images.*' => 'nullable|exists:gallery_images,id', // ID gambar yang ditandai untuk dihapus
+            ]);
+
+            \Log::info('Gallery Update: Validation passed');
 
         // --- Update Cover Image ---
         $coverImagePath = $gallery->cover_image;
@@ -222,7 +237,31 @@ class GalleryController extends Controller
             \Log::info('Gallery Update: No new images to process');
         }
 
-        return redirect()->route('admin.galleries.index')->with('success', 'Album galeri berhasil diperbarui.');
+            \Log::info('Gallery Update: Successfully completed', ['gallery_id' => $gallery->id]);
+            
+            return redirect()->route('admin.galleries.index')->with('success', 'Album galeri berhasil diperbarui.');
+            
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            \Log::error('Gallery Update: Validation failed', [
+                'gallery_id' => $gallery->id,
+                'errors' => $e->errors(),
+                'input' => $request->all()
+            ]);
+            throw $e; // Re-throw validation exception
+            
+        } catch (\Exception $e) {
+            \Log::error('Gallery Update: Exception occurred', [
+                'gallery_id' => $gallery->id,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
+            
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Terjadi kesalahan saat memperbarui album: ' . $e->getMessage());
+        }
     }
 
     /**

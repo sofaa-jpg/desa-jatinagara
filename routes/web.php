@@ -125,6 +125,68 @@ Route::get('/debug/upload-config', function() {
     return response()->json($info, 200, [], JSON_PRETTY_PRINT);
 })->name('debug.upload-config');
 
+// Test upload route for debugging
+Route::match(['GET', 'POST'], '/debug/test-upload', function(\Illuminate\Http\Request $request) {
+    if (!app()->environment('local', 'staging')) {
+        abort(404);
+    }
+    
+    if ($request->isMethod('POST')) {
+        \Log::info('Debug Upload Test: POST received', [
+            'has_file' => $request->hasFile('test_image'),
+            'all_files' => $request->allFiles(),
+            'all_input' => $request->all(),
+            'content_length' => $request->server('CONTENT_LENGTH'),
+        ]);
+        
+        if ($request->hasFile('test_image')) {
+            $file = $request->file('test_image');
+            \Log::info('Debug Upload Test: File details', [
+                'original_name' => $file->getClientOriginalName(),
+                'mime_type' => $file->getMimeType(),
+                'size' => $file->getSize(),
+                'is_valid' => $file->isValid(),
+                'error' => $file->getError(),
+                'temp_path' => $file->getRealPath(),
+            ]);
+            
+            try {
+                $path = $file->store('debug_uploads', 'public');
+                return response()->json(['success' => true, 'path' => $path]);
+            } catch (\Exception $e) {
+                \Log::error('Debug Upload Test: Exception', [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString()
+                ]);
+                return response()->json(['success' => false, 'error' => $e->getMessage()]);
+            }
+        }
+        
+        return response()->json(['success' => false, 'error' => 'No file uploaded']);
+    }
+    
+    return '<form method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="_token" value="' . csrf_token() . '">
+        <input type="file" name="test_image" required>
+        <button type="submit">Test Upload</button>
+    </form>';
+})->name('debug.test-upload');
+
+// Clear logs for debugging
+Route::get('/debug/clear-logs', function() {
+    if (!app()->environment('local', 'staging')) {
+        abort(404);
+    }
+    
+    $logFile = storage_path('logs/laravel.log');
+    if (file_exists($logFile)) {
+        file_put_contents($logFile, '');
+        return response()->json(['success' => true, 'message' => 'Logs cleared']);
+    }
+    
+    return response()->json(['success' => false, 'message' => 'Log file not found']);
+})->name('debug.clear-logs');
+
 // --- Rute Komentar (Pengiriman) ---
 Route::post('/news/{news}/comments', [CommentController::class, 'store'])->name('comments.store');
 
