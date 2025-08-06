@@ -18,7 +18,7 @@
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
             <div>
                 <a href="/">
-                    <img src="{{ asset('logo.png') }}" alt="{{ config('app.name', 'Desa Jatinagara') }}" class="w-40 h-40 object-contain" />
+                    <img src="{{ asset('logo.png') }}" alt="{{ config('app.name', 'Desa Jatinagara') }}" class="w-20 h-20 object-contain" />
                 </a>
             </div>
 
